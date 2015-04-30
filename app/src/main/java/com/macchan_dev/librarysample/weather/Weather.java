@@ -1,43 +1,34 @@
 package com.macchan_dev.librarysample.weather;
 
-import com.macchan_dev.librarysample.okhttp.OkHttpWrapper;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
 
 /**
  * Created by macchan.dev on 15/04/28.
  *
+ * 天気情報を取得する
  */
 public class Weather {
-
-    public interface WeatherListener {
-        public void onSuccess(String msg);
-    }
 
     public Weather() {
 
     }
 
-    public void getTokyo(final WeatherListener listener) {
-        getWeather("130010", listener);
+    /**
+     * 東京の情報を取得する
+     * @param connect コネクタ
+     * @param listener リスナ
+     */
+    public void getTokyo(WeatherConnect connect, WeatherConnect.WeatherListener listener) {
+        getWeather(connect, "130010", listener);
     }
 
 
-    public void getWeather(String city, final WeatherListener listener) {
-        OkHttpWrapper okHttpWrapper = new OkHttpWrapper();
-        okHttpWrapper.enqueue("http://weather.livedoor.com/forecast/webservice/json/v1?city=" + city,
-                new OkHttpWrapper.OkHttpListener() {
-                    @Override
-                    public void onFailure(Request request, IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(Response response) throws IOException {
-                        listener.onSuccess(response.body().string());
-                    }
-                });
+    /**
+     * 天気情報を取得する
+     * @param connect コネクタ
+     * @param city 都市番号
+     * @param listener リスナ
+     */
+    public void getWeather(WeatherConnect connect, String city, final WeatherConnect.WeatherListener listener) {
+        connect.request("http://weather.livedoor.com/forecast/webservice/json/v1?city=" + city, listener);
     }
 }

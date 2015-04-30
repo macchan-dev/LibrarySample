@@ -2,12 +2,12 @@ package com.macchan_dev.librarysample.weather;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.macchan_dev.librarysample.weather.json.PinpointLocation;
+import com.macchan_dev.librarysample.weather.json.WeatherJson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +27,14 @@ public class WeatherListFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
 
         if (getArguments() != null && getArguments().containsKey("list")) {
-            // jsonからnameだけ取り出す
             String list = getArguments().getString("list");
-
             Gson gson = new Gson();
-            WeatherDataList weatherDataList = gson.fromJson(list, WeatherDataList.class);
+            WeatherJson weatherJson = gson.fromJson(list, WeatherJson.class);
 
+            // jsonからnameだけ取り出す
             ArrayList<String> names = new ArrayList<>();
-            List<WeatherData> weatherDatas = weatherDataList.getWeatherList();
-            for (WeatherData d : weatherDatas) {
+            List<PinpointLocation> pinpointLocations = weatherJson.getPinpointLocations();
+            for (PinpointLocation d : pinpointLocations) {
                 names.add(d.getName());
             }
 

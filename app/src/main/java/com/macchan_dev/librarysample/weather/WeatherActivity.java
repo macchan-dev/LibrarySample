@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,18 +12,22 @@ import com.macchan_dev.librarysample.R;
 
 
 public class WeatherActivity extends ActionBarActivity {
+    private static final String TAG = WeatherActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+        // コネクタを取得する
+        WeatherConnect connect = (WeatherConnect) getIntent().getSerializableExtra("connect");
+
         // Fragmentのnewはメインスレッド上じゃないとダメだった
         final WeatherListFragment weatherListFragment = new WeatherListFragment();
 
         // 天気情報の取得
         Weather weather = new Weather();
-        weather.getTokyo(new Weather.WeatherListener() {
+        weather.getTokyo(connect, new WeatherConnect.WeatherListener() {
             @Override
             public void onSuccess(String msg) {
                 // 受け取ったjsonをListFragmentに渡す
@@ -34,6 +39,11 @@ public class WeatherActivity extends ActionBarActivity {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.add(R.id.container, weatherListFragment, "fragment");
                 transaction.commit();
+            }
+
+            @Override
+            public void onFailed(String error) {
+                Log.d(TAG, error);
             }
         });
     }
