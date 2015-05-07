@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
 import com.macchan_dev.librarysample.R;
+import com.macchan_dev.librarysample.weather.json.WeatherJson;
 
 
 public class WeatherActivity extends ActionBarActivity {
@@ -31,8 +33,23 @@ public class WeatherActivity extends ActionBarActivity {
             @Override
             public void onSuccess(String msg) {
                 // 受け取ったjsonをListFragmentに渡す
+                Gson gson = new Gson();
+                WeatherJson weatherJson = gson.fromJson(msg, WeatherJson.class);
+
                 Bundle bundle = new Bundle();
-                bundle.putString("list", msg);
+                bundle.putSerializable("list", weatherJson);
+                weatherListFragment.setArguments(bundle);
+
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(R.id.container, weatherListFragment, "fragment");
+                transaction.commit();
+            }
+
+            @Override
+            public void onSuccess(WeatherJson json) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", json);
                 weatherListFragment.setArguments(bundle);
 
                 FragmentManager manager = getFragmentManager();

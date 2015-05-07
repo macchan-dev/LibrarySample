@@ -27,9 +27,7 @@ public class WeatherListFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
 
         if (getArguments() != null && getArguments().containsKey("list")) {
-            String list = getArguments().getString("list");
-            Gson gson = new Gson();
-            WeatherJson weatherJson = gson.fromJson(list, WeatherJson.class);
+            WeatherJson weatherJson = (WeatherJson) getArguments().getSerializable("list");
 
             // jsonからnameだけ取り出す
             ArrayList<String> names = new ArrayList<>();

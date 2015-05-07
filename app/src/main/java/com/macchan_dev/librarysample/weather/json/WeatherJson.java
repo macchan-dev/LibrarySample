@@ -1,5 +1,6 @@
 package com.macchan_dev.librarysample.weather.json;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * 取得したJSONの構造
  */
-public class WeatherJson {
+public class WeatherJson implements Serializable {
     public List<PinpointLocation> pinpointLocations;
     public String link;
     public List<Forecast> forecasts;

@@ -13,4 +13,12 @@
         android:id="@+id/buttonOkHttp"
         android:layout_gravity="center_horizontal"
          />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retrofit"
+        android:id="@+id/buttonRetrofit"
+        android:layout_gravity="center_horizontal"
+        />
 </LinearLayout>

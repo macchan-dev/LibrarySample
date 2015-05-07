@@ -29,6 +29,6 @@ public class Weather {
      * @param listener リスナ
      */
     public void getWeather(WeatherConnect connect, String city, final WeatherConnect.WeatherListener listener) {
-        connect.request("http://weather.livedoor.com/forecast/webservice/json/v1?city=" + city, listener);
+        connect.request(city, listener);
     }
 }

@@ -14,9 +14,11 @@ import java.io.IOException;
  */
 public class WeatherOkHttp extends WeatherConnect {
     @Override
-    public void request(final String url, final WeatherListener listener) {
+    public void request(final String city, final WeatherListener listener) {
+        String requestUrl = REQUEST_DOMAIN + REQUEST_PATH + "?" + REQUEST_QUERY + "=" + city;
+
         OkHttpWrapper okHttpWrapper = new OkHttpWrapper();
-        okHttpWrapper.enqueue(url,
+        okHttpWrapper.enqueue(requestUrl,
                 new OkHttpWrapper.OkHttpListener() {
                     @Override
                     public void onFailure(Request request, IOException e) {

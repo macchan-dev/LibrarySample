@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.macchan_dev.librarysample.weather.WeatherActivity;
 import com.macchan_dev.librarysample.weather.WeatherConnect;
 import com.macchan_dev.librarysample.weather.WeatherOkHttp;
+import com.macchan_dev.librarysample.weather.WeatherRetrofit;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,6 +53,17 @@ public class MainActivity extends ActionBarActivity {
     public void okHttp() {
         // 使用するコネクタを生成
         WeatherConnect connect = new WeatherOkHttp();
+
+        // インテントに渡す
+        Intent i = new Intent(getApplicationContext(), WeatherActivity.class);
+        i.putExtra("connect", connect);
+        startActivity(i);
+    }
+
+    @OnClick(R.id.buttonRetrofit)
+    public void retroFit() {
+        // 使用するコネクタを生成
+        WeatherConnect connect = new WeatherRetrofit();
 
         // インテントに渡す
         Intent i = new Intent(getApplicationContext(), WeatherActivity.class);
